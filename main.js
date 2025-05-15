@@ -212,9 +212,7 @@ var pct =new Array(9);
         const screenWidth = window.innerWidth;
         let factor=1.17;
         
-        const scaleX = screenWidth / originalWidth;
-        const scaleY = screenHeight / originalHeight;
-        const scale = scaleY;
+        const scale = screenHeight / originalHeight;
         const scaledImageWidth = originalWidth * scale;
         const scaledImageHeight = originalHeight * scale;
         const imageLeftOffset = (screenWidth - scaledImageWidth) / 2;
@@ -226,11 +224,13 @@ var pct =new Array(9);
         console.log(screenHeight + " " + screenWidth);
         scratcher.style.left = `${canvasX}px`;
         scratcher.style.top = `${canvasY}px`;
-      
+        //alert();
+        //alert("screen " + screenHeight);
         // Optionally scale canvas size too
         scratcher.style.width = `${scratcher.width * scale*factor}px`;
         scratcher.style.height = `${scratcher.height * scale*factor}px`;
         // Adjust the z-index of the canvas dynamically
+        
       }
       
      
