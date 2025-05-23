@@ -21,9 +21,8 @@ body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size:cover;
-  /* max-height: 100%; */
-  background-size: auto 100%; /* scales image to 100% height */
+  background-size: auto 100svh; /* scales image to 100% height */
+  overflow: scroll;
   position: relative;
 
   -webkit-text-size-adjust: none;

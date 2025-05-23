@@ -13,12 +13,14 @@ html {
 }
 body {
     background-image: url(images/background-landscape.png);
-    background-size: 100vw, auto;
     background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: scroll;
-  overflow:scroll;
-  
+    background-attachment: fixed;
+    overflow:scroll;
+    background-size: 100vw auto;
+    -webkit-background-size: 100vw auto;
+    -moz-background-size: 100vw auto;
+    -o-background-size: 100vw auto;
   
   /**background:  linear-gradient(90deg, #ff95c8, #7FB1ED);
   background-size: 100% 200%;
