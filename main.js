@@ -3,21 +3,24 @@
  *
  * depends on jQuery>=1.7
  */
-/*import {startParticles, stopParticles, startConfetti, stopConfetti} from './particles.js';*/
-/*import {confetti} from 'https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/umd/confetti.js';*/
 // Original background image dimensions
-const originalWidth = 1920;
-const originalHeight = 1080;
-
+const PORTRAIT_IMAGE_HEIGHT = 1080;
+const PORTRAIT_IMAGE_WIDTH = 1920;
+const LANDSCAPE_IMAGE_HEIGHT = 1080;
+const LANDSCAPE_IMAGE_WIDTH = 2500;
 // Your point on the original image
-const targetX = 905;
-const targetY = 434;
-let scratcher;
-// locations of correct gender circles
-var loc = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]];
-// location of other gender which will give scratch further warning
-var oloc = [[4,5,9],[1,2,7],[1,3,4],[3,5,8],[1,4,9],[1,2,7],[3,4,7],[1,2,6]];
-var pct =new Array(9);
+const PORTRAIT_SCRATCHER_X = 905;
+const PORTRAIT_SCRATCHER_Y = 434;
+const LANDSCAPE_SCRATCHER_X = 697;
+const LANDSCAPE_SCRATCHER_Y = 157;
+let targetX;
+let targetY;
+let originalWidth;
+let originalHeight;
+
+let scratcher, canvasOriginalHeight, canvasOriginalWidth;
+var scratchers = [];
+var pct=0;
 (function() {
     /**
      * Returns true if this browser supports canvas
@@ -45,7 +48,6 @@ var pct =new Array(9);
     var triggered=false;
     var nosound=true;
     var params = new URLSearchParams(window.location.search.slice(1));
-    var pct1=0, pct2=0, pct3=0, pct4=0, pct5=0, pct6 = 0;
 
     function supportsCanvas() {
         return !!document.createElement('canvas').getContext;
@@ -56,31 +58,20 @@ var pct =new Array(9);
      * Handle scratch event on a scratcher
      */
     function checkpct() {
-        var p = 15;
-        var pct1 = pct[loc[rnd-1][0]-1];
-        var pct2 = pct[loc[rnd-1][1]-1];
-        var pct3 = pct[loc[rnd-1][2]-1];
+        var p = 25;
 
-        var pct4= pct[oloc[rnd-1][0]-1];
-        var pct5= pct[oloc[rnd-1][1]-1];
-        var pct6= pct[oloc[rnd-1][2]-1];
 
         if (!triggered) {
-            if (pct1>0 && pct2>0 && pct3>0)  {
-                if (pct1<p || pct2<p || pct<p)  {
+            if (pct>0)  {
+                if (pct<p)  {
                 //document.getElementById("scratcher3Pct").innerHTML="Scratch MORE!";
                 if (!CrispyToast.clearall()){
                     CrispyToast.success('Scratch MORE!',{ position: 'top-center' },{timeout: 3000});
                     }
                 } 
             }
-            if ((pct4>p && pct5>p && pct6>p) && (pct1<p || pct2<p || pct3<p)) {
-                if (!CrispyToast.clearall()&&!triggered){
-                    CrispyToast.error('Scratch other circles. You havent find the gender yet!',{ position: 'top-center' },{timeout: 6000});
-                    }
-            } 
-
-            if (pct1>p && pct2>p && pct3>p) {
+           
+            if (pct>p) {
                 $('#tboy').show();
                 $('#tboy').text(gendertext);
                 $('#tboy').css('color',colortxt);
@@ -88,8 +79,8 @@ var pct =new Array(9);
                 $('.images').hide();
                 $('#or').hide();
                 $('#girl').hide();
-                document.getElementsByTagName("body")[0].style.backgroundColor = color;
-                document.getElementsByTagName("body")[0].style.backgroundImage = 'none';
+                //document.getElementsByTagName("body")[0].style.backgroundColor = color;
+                //document.getElementsByTagName("body")[0].style.backgroundImage = 'none';
                 //document.getElementById("H3").insertAdjacentHTML('afterend', "<h4 id='testtext' style='white-space:normal'> Depending on the product you buy, here it will say either <br> 'It is a Girl!' or 'It is a Boy! with pink or blue background.</h4>");
 
                 $('#H3').hide();
@@ -101,7 +92,7 @@ var pct =new Array(9);
         }
     };
     function scratcher1Changed(ev) {
-        pct[0] = (this.fullAmount(40) * 100)|0;
+        pct = (this.fullAmount(40) * 100)|0;
         checkpct();
     };
    
@@ -123,17 +114,31 @@ var pct =new Array(9);
             soundHandle.play();
         }
         triggered=true;
-       
+       for (let i = 1; i < 4; i++) {
+            let scratcherCanvas = document.getElementById('scratcher'); // scratchers[2] corresponds to 'scratcher3'
+            let rect = scratcherCanvas.getBoundingClientRect();
+            let centerX = (rect.left + rect.right) / 2 / window.innerWidth;
+            let centerY = (rect.top + rect.bottom) / 2 / window.innerHeight;
+                confetti({
+                    particleCount: 50,
+                    spread: 360,
+                    startVelocity:10,
+                    gravity:0,
+                    origin: {x: centerX, y: centerY },
+                    colors: [colortxt],
+                    scalar:1.2,
+                });
+        }
             var duration = 10 * 1000;
              var end = Date.now() + duration;
              var defaults = { startVelocity: 10, spread: 360, ticks: 70, zIndex: 0 };
              var particleCount = 5 ;
              (function frame() {
              // launch a few confetti from the left edge
-             confetti({...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#FFFFFF']}
+             confetti({...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: [colortxt]}
              );
              // and launch a few from the right edge
-             confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },colors: ['#FFFFFF']}
+             confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },colors: [colortxt] }
              );
           
              // keep going until we are out of time
@@ -155,7 +160,7 @@ var pct =new Array(9);
      */
     function onResetClicked(scratchers) {
         var i;
-        pct = [];
+        pct = 0;
         //$("#scratcher3Pct").hide();
         $("#resetbutton").hide();
         for (i = 0; i < scratchers.length; i++) {
@@ -168,8 +173,8 @@ var pct =new Array(9);
         $('#girl').show();
         $('.images').show();
 
-        document.getElementsByTagName("body")[0].style.backgroundColor = "#ffffff";
-        document.getElementsByTagName("body")[0].style.backgroundImage = 'url(images/background.jpg)';
+        //document.getElementsByTagName("body")[0].style.backgroundColor = "#ffffff";
+        //document.getElementsByTagName("body")[0].style.backgroundImage = 'url(images/background.jpg)';
         // document.getElementById('testtext').remove();
 
         $('#H3').show();
@@ -208,36 +213,69 @@ var pct =new Array(9);
     
     //   }
     function positionCanvas() {
-        const screenHeight = window.innerHeight;
-        const screenWidth = window.innerWidth;
-        let factor=1.17;
-        
-        const scale = screenHeight / originalHeight;
-        const scaledImageWidth = originalWidth * scale;
-        const scaledImageHeight = originalHeight * scale;
-        const imageLeftOffset = (screenWidth - scaledImageWidth) / 2;
-        const imageTopOffset = (screenHeight - scaledImageHeight) / 2;
+        // Use media query to match CSS orientation logic
+    const isLandscape = window.matchMedia('(orientation: landscape) and (max-width: 1023px)').matches;
+    let factor=1;
+    const screenHeight = window.innerHeight;
+    const screenWidth = window.innerWidth;
+    console.log("screen " + screenHeight + " " + screenWidth);
+    let scaledImageHeight, scaledImageWidth, imageLeftOffset, imageTopOffset,canvasX, canvasY;
+    let scale;
+    if (isLandscape) {
+        originalWidth = LANDSCAPE_IMAGE_WIDTH;
+        originalHeight = LANDSCAPE_IMAGE_HEIGHT;
+        targetX = LANDSCAPE_SCRATCHER_X;
+        targetY = LANDSCAPE_SCRATCHER_Y;
+        factor=1.5;
+        scale = screenWidth / originalWidth;
+        scaledImageWidth = screenWidth;
+        scaledImageHeight = originalHeight * scale;
+        imageLeftOffset = 0;
+        imageTopOffset = (screenHeight - scaledImageHeight) / 2;
+        canvasX = imageLeftOffset + targetX * scale;
+        canvasY = imageTopOffset + targetY * scale;
+    } else {
+        originalWidth = PORTRAIT_IMAGE_WIDTH;
+        originalHeight = PORTRAIT_IMAGE_HEIGHT;
+        targetX = PORTRAIT_SCRATCHER_X;
+        targetY = PORTRAIT_SCRATCHER_Y;
+        factor=1.17;
+        scale = screenHeight / originalHeight;
+        scaledImageWidth = originalWidth * scale;
+        scaledImageHeight = screenHeight;
+        imageLeftOffset = (screenWidth - scaledImageWidth) / 2;
+        imageTopOffset = 0;
+        canvasX = imageLeftOffset + targetX * scale;
+        canvasY = imageTopOffset + targetY * scale;
+    }
+       
 
-        const canvasX = imageLeftOffset + targetX * scale;
-        const canvasY = imageTopOffset + targetY * scale;
-        console.log(scale);
-        console.log(screenHeight + " " + screenWidth);
+        
         scratcher.style.left = `${canvasX}px`;
         scratcher.style.top = `${canvasY}px`;
         //alert();
         //alert("screen " + screenHeight);
         // Optionally scale canvas size too
-        scratcher.style.width = `${scratcher.width * scale*factor}px`;
-        scratcher.style.height = `${scratcher.height * scale*factor}px`;
-        // Adjust the z-index of the canvas dynamically
+             // Always use the original canvas size for scaling
+        scratcher.width = canvasOriginalWidth * scale * factor;
+        scratcher.height = canvasOriginalHeight * scale * factor;
+
+        // For iOS safe area
+        scratcher.style.height = `calc(${scratcher.height}px - constant(safe-area-inset-bottom))`;
+        scratcher.style.height = `calc(${scratcher.height}px - env(safe-area-inset-bottom))`; 
         
+        if(scratchers[0]){ 
+            if (triggered) {
+            scratchers[0].resetnoclear(true);
+        } else {
+            scratchers[0].resetnoclear(false);
+        }   
+        }
       }
       
      
     function initPage() {
         var scratcherLoadedCount = 0;
-        var scratchers = [];
-        var pct = [];
         var i, i1;    
         // if (window.confirm('This scratch off contains sound when the gender is revealed. Do you want to continue with sound? (Ok:with sound, Cancel:without sound')) {
         //     nosound=false;
@@ -247,9 +285,9 @@ var pct =new Array(9);
 
         surname = params.get('surname');
         if (surname !=null && surname.replace(/\s/g, '').length) {
-            $("#baby").text('baby ' + surname);
+            $("#baby").text('Baby ' + surname);
         } else {
-            $("#baby").text('the baby');
+            $("#baby").text('the Baby');
             document.getElementById('surname').style.fontWeight="normal";
             $('#baby').css('font-weight', 'normal');
 
@@ -304,13 +342,15 @@ var pct =new Array(9);
                 $('#resetbutton').on('click', function() {
                         onResetClicked(scratchers);
                     });
-    
+                positionCanvas();
                 // hide loading text, show instructions text
                 //$('#loading-text').hide();
                 //$('#inst-text').show();
             }
         };
         scratcher = document.getElementById('scratcher');
+        canvasOriginalHeight=scratcher.height;
+        canvasOriginalWidth=scratcher.width;
         scratcher.style.zIndex = '0';
         /* scratcher = document.createElement('canvas');
         scratcher.id = 'scratcher';
@@ -325,8 +365,7 @@ var pct =new Array(9);
         scratchers[0] = new Scratcher('scratcher');
         // set up this listener before calling setImages():
         scratchers[0].addEventListener('imagesloaded', onScratcherLoaded);
-        scratchers[0].setImages('images/s1bg.jpg',
-                 'images/foreground.jpg');
+        scratchers[0].setImages('images/s1bg.jpg','images/foreground.jpg');
   
          // get notifications of this scratcher changing
          // (These aren't "real" event listeners; they're implemented on top
@@ -334,9 +373,13 @@ var pct =new Array(9);
          //scratchers[3].addEventListener('reset', scratchersChanged);
          scratchers[0].addEventListener('scratchesended', scratcher1Changed);
          
-         window.addEventListener('resize', positionCanvas);
-         window.addEventListener('load', positionCanvas);
-         positionCanvas();
+         $( window ).on({
+            orientationchange: function(e) {
+                positionCanvas();
+            },resize: function(e) {
+                positionCanvas();
+            }
+        });        
          
          // var canvas = document.getElementById('scratcher1');
          // canvas.onmousemove = null;

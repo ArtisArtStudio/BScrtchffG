@@ -237,7 +237,6 @@ Scratcher = (function() {
         //let offCanvas = document.createElement('canvas');
         let w = this.canvas.temp.width;
         let h =this.canvas.temp.height;
-       
         // Step 1: clear the temp
         this.canvas.temp.width = this.canvas.temp.width; // resizing clears
         this.canvas.main.width = this.canvas.main.width; // resizing clears
@@ -520,7 +519,7 @@ Scratcher = (function() {
         const resizeHeight = c.height >> 0
        
         let ratio=1;
-        
+
         if (this.pixels && !clear){
             
            /*  const ibm = await window.createImageBitmap(this.pixels, 0, 0, this.canvas.draw.width, this.canvas.draw.width, {
@@ -566,8 +565,7 @@ Scratcher = (function() {
 
         } else {
             this.canvas.temp.width = this.canvas.draw.width = c.width;
-            this.canvas.temp.height = this.canvas.draw.height = c.height;
-            
+            this.canvas.temp.height = this.canvas.draw.height = c.height;            
         }
         this.recompositeCanvases(clear);
     };

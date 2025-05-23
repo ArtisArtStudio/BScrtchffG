@@ -14,6 +14,7 @@ html {
 body {
   height: 100svh;
   background-image: url(images/background.png);
+  background-color: #ffffff;
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
@@ -47,12 +48,10 @@ font-weight: 400;
 flex-direction: column;
 font-size: calc(5rem + 1vw);
 text-align: center;
-text-shadow: -1px -1px 0 #ffdf75, 1px -1px 0 #756000, -1px 1px 0 #584100, 1px 1px 0 #584100,  2px  6px 6px #4d4c4c, 4px  12px 6px #fffdfd;
+text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #616161, -1px 1px 0 #505050, 1px 1px 0 #584100,  2px  6px 6px #4d4c4c, 4px  12px 6px #fffdfd;
 
 } 
-#or {
-  font-size: calc(3rem + 1vw);
-}
+
 .pagetop h3 {
 font-family: "Bona Nova SC", serif;
 flex-direction: column;
@@ -93,7 +92,6 @@ white-space:normal;
   white-space: normal;
 }
 #boy{
-  line-height: 5vh;
   text-align: center;
 }
 #t1 {
@@ -138,15 +136,11 @@ white-space:normal;
   .pagetop h1 {
     font-size: calc(4rem + 2vw);
   }
-  #or {
-    font-size: calc(2rem + 1vw);
-  }
+
   .pagetop h3 {
     font-size: calc(1.5rem + 0.5vw);
   }
-  #or{
-    line-height: 5vh !important;
-  }
+
 }  */
 
 @media (min-width: 768px) and (min-height: 930px){ 
@@ -158,9 +152,7 @@ white-space:normal;
     font-size: calc(5rem + 4vw);
   }
 
-  #boy{
-    line-height: 10vh !important;
-  }
+ 
   #scratcher-box {
     position:absolute;
     width: 30em;
@@ -181,9 +173,6 @@ white-space:normal;
     font-size: calc(5rem + 3vw);
   }
 
-    #boy{
-    line-height: 12vh !important;
-  }
 
   .pagetop h4 {
     font-size: 2vh;
@@ -213,9 +202,6 @@ white-space:normal;
       -o-transform-origin: top left;
       transform-origin: top left;
   } */
-  #boy {
-    line-height: 10vh !important;
-  }
 
   #scratcher-box {
     position:absolute;
@@ -236,9 +222,7 @@ white-space:normal;
   .pagetop h4 {
     font-size: calc(0.6rem + 0.6vw) ;
   }
-  #boy {
-    line-height: 12vh !important;
-  }
+
   .images{
     max-width: 70% !important;
   } 
@@ -249,9 +233,6 @@ white-space:normal;
     top: 68%;
   }
  
-  #H3 {
-    line-height: 17px;
-  }
 /*   #t1 {
     width: 300px;
   } */
