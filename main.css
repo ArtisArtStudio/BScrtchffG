@@ -22,7 +22,7 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: auto 100svh; /* scales image to 100% height */
-  overflow: scroll;
+  overflow: hidden;
   position: relative;
 
   -webkit-text-size-adjust: none;

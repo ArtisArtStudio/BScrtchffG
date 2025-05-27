@@ -16,7 +16,7 @@ body {
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    overflow:scroll;
+    overflow:hidden;
     background-size: 100vw auto;
     -webkit-background-size: 100vw auto;
     -moz-background-size: 100vw auto;
