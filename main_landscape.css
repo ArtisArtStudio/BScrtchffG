@@ -102,7 +102,7 @@ text-align: right;
 #tboy {
   margin-left: auto;
   margin-right: 0;
-  text-align:center;
+  text-align:right;
   width: calc(50% - 10px);
   line-height: 1 !important;
 
@@ -182,7 +182,7 @@ text-align: right;
     font-size: calc(0.5rem + 0.70vw);
   }
   .pagetop h3 {
-    font-size: calc(1rem + 1vh);
+    font-size: calc(1rem + 1vw);
   }
   #scratcher-box {
     width: 18em;
@@ -204,22 +204,8 @@ text-align: right;
   }
   
 }
-@media (min-height:336px) and (min-width: 672px) { 
-  .pagetop h1 {
-    font-size: calc(5rem + 1vw);
-  }
-  .pagetop h4 {
-    font-size: calc(0.5rem + 0.70vw);
-  }
-  .pagetop h3 {
-    font-size: calc(1rem + 2vh);
-  }
-  #scratcher-box {
-    width: 20em;
-    height: 20em;
-    top: 50%;
-    left: 0%;
-  }
+@media (min-width: 672px) { 
+  
   #t1
   {
     width: calc(55% - 10px);
@@ -228,7 +214,7 @@ text-align: right;
     width: calc(55% - 10px);
   }
 }
-@media (max-height:321px) and (max-width:575px){ 
+@media screen and (max-height:321px){ 
   .pagetop h1 {
     font-size: calc(2rem + 6vw);
   }

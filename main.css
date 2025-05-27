@@ -163,8 +163,7 @@ white-space:normal;
   }  
   
 }
-/* landscape tablet mode */
-@media (min-height: 675px) and (min-width: 1024px){ 
+@media (min-height: 635px) and (min-width: 1024px){ 
   .pagetop h3 {
     font-size: calc(1.5rem + 1.2vh);
   } 
