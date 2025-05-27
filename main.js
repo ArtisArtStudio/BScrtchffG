@@ -218,7 +218,7 @@ var pct=0;
     let factor=1;
     const screenHeight = window.innerHeight;
     const screenWidth = window.innerWidth;
-    console.log("screen " + screenHeight + " " + screenWidth);
+    //console.log("screen " + screenHeight + " " + screenWidth);
     let scaledImageHeight, scaledImageWidth, imageLeftOffset, imageTopOffset,canvasX, canvasY;
     let scale;
     if (isLandscape) {
