@@ -85,7 +85,7 @@ var pct=0;
                 $('#H3').hide();
                 $('#H4').hide();
                 //$('#scratcher3Pct').hide();
-                scratchers[0].clear()
+                scratchers[0].clear();
                 confetti_effect();
             }
         }
