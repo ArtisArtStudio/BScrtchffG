@@ -15,11 +15,8 @@ body {
     background-image: url(images/background-landscape.png);
     background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
     overflow:hidden;
     background-size: 100vw auto;
-    -webkit-background-size: 100vw auto;
-    -moz-background-size: 100vw auto;
     -o-background-size: 100vw auto;
   
   /**background:  linear-gradient(90deg, #ff95c8, #7FB1ED);

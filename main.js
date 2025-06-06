@@ -17,7 +17,6 @@ let targetX;
 let targetY;
 let originalWidth;
 let originalHeight;
-
 let scratcher, canvasOriginalHeight, canvasOriginalWidth;
 var scratchers = [];
 var pct=0;
@@ -86,7 +85,7 @@ var pct=0;
                 $('#H3').hide();
                 $('#H4').hide();
                 //$('#scratcher3Pct').hide();
-
+                scratchers[0].clear()
                 confetti_effect();
             }
         }
@@ -213,11 +212,13 @@ var pct=0;
     
     //   }
     function positionCanvas() {
-        // Use media query to match CSS orientation logic
+    
+   
+    // Use media query to match CSS orientation logic
     const isLandscape = window.matchMedia('(orientation: landscape) and (max-width: 1023px)').matches;
     let factor=1;
-    const screenHeight = window.innerHeight;
-    const screenWidth = window.innerWidth;
+    const screenHeight = window.visualViewport.height || window.innerHeight;
+    const screenWidth = window.visualViewport.width|| window.innerWidth;
     //console.log("screen " + screenHeight + " " + screenWidth);
     let scaledImageHeight, scaledImageWidth, imageLeftOffset, imageTopOffset,canvasX, canvasY;
     let scale;
@@ -248,9 +249,6 @@ var pct=0;
         canvasX = imageLeftOffset + targetX * scale;
         canvasY = imageTopOffset + targetY * scale;
     }
-       
-
-        
         scratcher.style.left = `${canvasX}px`;
         scratcher.style.top = `${canvasY}px`;
         //alert();
@@ -271,6 +269,7 @@ var pct=0;
             scratchers[0].resetnoclear(false);
         }   
         }
+
       }
       
      
@@ -334,7 +333,7 @@ var pct=0;
         function onScratcherLoaded(ev) {
             
             scratcherLoadedCount++;
-            $("table1").width($(window).width());
+            //$("table1").width($(window).width());
             if (scratcherLoadedCount == scratchers.length) {
                 // all scratchers loaded!
     
