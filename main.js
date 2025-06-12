@@ -64,13 +64,16 @@ var pct=0;
             if (pct>0)  {
                 if (pct<p)  {
                 //document.getElementById("scratcher3Pct").innerHTML="Scratch MORE!";
-                if (!CrispyToast.clearall()){
-                    CrispyToast.success('Scratch MORE!',{ position: 'top-center' },{timeout: 3000});
+                if (CrispyToast.toasts.length===0) {
+                    CrispyToast.success('Scratch MORE!', { position: 'top-center', timeout: 2000});
                     }
                 } 
             }
            
             if (pct>p) {
+                if(CrispyToast.toasts.length!=0){
+                    CrispyToast.clearall();
+                }
                 $('#tboy').show();
                 $('#tboy').text(gendertext);
                 $('#tboy').css('color',colortxt);
@@ -105,14 +108,14 @@ var pct=0;
         //defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
         
         
-        if(triggered==true) {
+        if (triggered == true) {
             return;
         }
         if (!nosound) {
-            soundHandle.volume=0.5;
+            soundHandle.volume = 0.5;
             soundHandle.play();
         }
-        triggered=true;
+        triggered = true;
        for (let i = 1; i < 4; i++) {
             let scratcherCanvas = document.getElementById('scratcher'); // scratchers[2] corresponds to 'scratcher3'
             let rect = scratcherCanvas.getBoundingClientRect();
@@ -160,7 +163,7 @@ var pct=0;
     function onResetClicked(scratchers) {
         var i;
         pct = 0;
-        //$("#scratcher3Pct").hide();
+        CrispyToast.toasts=[];
         $("#resetbutton").hide();
         for (i = 0; i < scratchers.length; i++) {
             scratchers[i].reset();
